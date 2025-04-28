@@ -1,16 +1,17 @@
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
 import axios from "axios";
 
 dotenv.config();
 const app = express();
 
-app.use(cors({
-  origin: 'https://english-practice-app-eosin.vercel.app',
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://english-practice-app-eosin.vercel.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 app.use(express.json());
 
 app.post("/generate", async (req, res) => {
